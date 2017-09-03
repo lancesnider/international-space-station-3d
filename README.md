@@ -2,6 +2,8 @@
 
 This will show you the current location of the ISS in 3D space as it flies over Earth. By clicking and dragging, you can see what the astronauts would be seeing right now!
 
+![ISS 3D](https://user-images.githubusercontent.com/3202211/30000064-03112822-9014-11e7-8dc6-f503203284bf.png)
+
 ## Getting Started
 
 1. Pull everything into your `assets` folder
