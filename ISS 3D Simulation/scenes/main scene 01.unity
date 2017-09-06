@@ -730,7 +730,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 129bba5f06c424499b5d72efb929165b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  earth: {fileID: 0}
+  earthParent: {fileID: 733316497}
+  earth: {fileID: 1000665062}
 --- !u!1 &386900802
 GameObject:
   m_ObjectHideFlags: 0

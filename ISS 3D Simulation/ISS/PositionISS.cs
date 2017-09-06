@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Boomlagoon.JSON;
+
 public class PositionISS : MonoBehaviour {
 
+  public Transform earthParent;
   public Transform earth;
 
   // Link to the API for the ISS position
   private string issApiUrl = "http://api.open-notify.org/iss-now.json";
-  private Vector3 lastISSSpacetime;
-  private Vector3 issVelocity = new Vector3(0,0,0);
+
+  private Vector2 lastISSPosition;
+  private float lastAPITime;
+  private Vector2 issPositionDelta;
+  private Vector3 velocity;
 
   void Start ()
   {
@@ -18,7 +24,7 @@ public class PositionISS : MonoBehaviour {
 
   void Update ()
   {
-
+    EstimateISSPosition();
   }
 
   IEnumerator GetISSDataFromAPI ()
@@ -37,26 +43,45 @@ public class PositionISS : MonoBehaviour {
 
   void ParseISSJSONData (string apiText)
   {
-    Debug.Log(apiText);
-    SetISSPosition();
+    JSONObject json = JSONObject.Parse(apiText);
+    JSONObject iss_position = json.GetObject("iss_position");
+    float longitude = float.Parse(iss_position.GetString("longitude"));
+    float latitude = float.Parse(iss_position.GetString("latitude"));
+
+    SetISSPosition(longitude, latitude);
+    DetermineVelocity(longitude, latitude);
   }
 
-  void SetISSPosition ()
+  void EstimateISSPosition ()
   {
+    if(lastISSPosition == new Vector2(0,0)) return;
 
+    float timeElapsed = Time.time - lastAPITime;
+    float scale = timeElapsed/velocity[2];
+    Debug.Log(velocity);
+    Debug.Log(velocity[0] * scale);
+    float longitude = lastISSPosition[0] + velocity[0] * scale;
+    float latitude = lastISSPosition[1] + velocity[1] * scale;
+    SetISSPosition(longitude, latitude);
   }
 
-  void ApplyISSVelocity ()
+  void SetISSPosition (float longitude, float latitude)
   {
-    /*
-      We want the animation to look smooth, but we only know position of ISS once every second.
+    earthParent.eulerAngles = new Vector3(0, 0, latitude);
+    earth.localEulerAngles = new Vector3(0, longitude-90, 0);
+  }
 
-      To keep the movement from looking choppy, we use the last 2 positions to determine its velocity.
-      The ISS will move in that direction until the velocity is updated.
+  void DetermineVelocity (float longitude, float latitude)
+  {
+    float timeNow = Time.time;
+    float timeDifference = timeNow - lastAPITime;
+    lastAPITime = timeNow;
 
-      This method is also useful for slow or lost connections where we can't gurantee an update every
-      second.
-    */
+    Vector2 currentISSPosition = new Vector2(longitude, latitude);
+    issPositionDelta = currentISSPosition - lastISSPosition;
+    lastISSPosition = currentISSPosition;
+
+    velocity = new Vector3(issPositionDelta[0], issPositionDelta[1], timeDifference);
   }
 
 }
