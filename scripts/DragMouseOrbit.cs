@@ -35,8 +35,8 @@
          {
              if (Input.GetMouseButton(0))
              {
-                 velocityX += xSpeed * Input.GetAxis("Mouse X") * distance * 0.02f;
-                 velocityY += ySpeed * Input.GetAxis("Mouse Y") * 0.02f;
+                 velocityX -= xSpeed * Input.GetAxis("Mouse X") * distance * 0.02f;
+                 velocityY -= ySpeed * Input.GetAxis("Mouse Y") * 0.02f;
              }
              rotationYAxis -= velocityX;
              rotationXAxis += velocityY;
