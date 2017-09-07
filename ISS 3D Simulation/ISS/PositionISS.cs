@@ -6,82 +6,72 @@ using Boomlagoon.JSON;
 
 public class PositionISS : MonoBehaviour {
 
-  public Transform earthParent;
-  public Transform earth;
+  public GameObject earthParent;
+  public GameObject earth;
 
-  // Link to the API for the ISS position
   private string issApiUrl = "http://api.open-notify.org/iss-now.json";
-
-  private Vector2 lastISSPosition;
-  private float lastAPITime;
-  private Vector2 issPositionDelta;
-  private Vector3 velocity;
+  private int positionsToRecord = 3;
+  private Vector2[] recentISSPositions = new Vector2[5];
+  private IEnumerator coroutine;
 
   void Start ()
   {
-    StartCoroutine (GetISSDataFromAPI());
+    InvokeRepeating("CallISSAPI", 0f, 1.0f);
+    InvokeRepeating("SetISSPosition", positionsToRecord, 1.0f);
   }
 
-  void Update ()
+  void CallISSAPI ()
   {
-    EstimateISSPosition();
+    if(coroutine != null) StopCoroutine(coroutine);
+    coroutine = GetISSDataFromAPI();
+    StartCoroutine(coroutine);
   }
 
   IEnumerator GetISSDataFromAPI ()
   {
-    while (true) {
-      WWW www = new WWW (issApiUrl);
-      yield return www;
-      if (www.text != "") {
-        ParseISSJSONData(www.text);
-      } else {
-        Debug.Log("Error: " + www.error);
-      }
-      yield return new WaitForSeconds(1.0f);
+    WWW www = new WWW (issApiUrl);
+    yield return www;
+    if (www.text != "") {
+      Vector2 position = ParseISSJSONData(www.text);
+      AddPositionToArray(position);
+    } else {
+      Debug.Log("Error: " + www.error);
     }
   }
 
-  void ParseISSJSONData (string apiText)
+  Vector2 ParseISSJSONData (string apiText)
   {
     JSONObject json = JSONObject.Parse(apiText);
     JSONObject iss_position = json.GetObject("iss_position");
     float longitude = float.Parse(iss_position.GetString("longitude"));
     float latitude = float.Parse(iss_position.GetString("latitude"));
-
-    SetISSPosition(longitude, latitude);
-    DetermineVelocity(longitude, latitude);
+    return new Vector2(longitude, latitude);
   }
 
-  void EstimateISSPosition ()
+  void SetISSPosition ()
   {
-    if(lastISSPosition == new Vector2(0,0)) return;
+    float latitude = recentISSPositions[positionsToRecord-1][1];
+    float longitude = recentISSPositions[positionsToRecord-1][0];
 
-    float timeElapsed = Time.time - lastAPITime;
-    float scale = timeElapsed/velocity[2];
-    Debug.Log(velocity);
-    Debug.Log(velocity[0] * scale);
-    float longitude = lastISSPosition[0] + velocity[0] * scale;
-    float latitude = lastISSPosition[1] + velocity[1] * scale;
-    SetISSPosition(longitude, latitude);
+    iTween.RotateTo(earthParent, iTween.Hash(
+      "rotation", new Vector3(0,0,latitude),
+      "time", 1.0f,
+      "easeType", "linear"
+    ));
+
+    iTween.RotateTo(earth, iTween.Hash(
+      "rotation", new Vector3(0, longitude-90, 0),
+      "time", 1.0f,
+      "easeType", "linear",
+      "islocal", true
+    ));
   }
 
-  void SetISSPosition (float longitude, float latitude)
+  void AddPositionToArray (Vector2 newItem)
   {
-    earthParent.eulerAngles = new Vector3(0, 0, latitude);
-    earth.localEulerAngles = new Vector3(0, longitude-90, 0);
+    for (int i = positionsToRecord-1; i > 0; i--) {
+      recentISSPositions[i] = recentISSPositions[i-1];
+    }
+    recentISSPositions[0] = newItem;
   }
-
-  void DetermineVelocity (float longitude, float latitude)
-  {
-    float timeNow = Time.time;
-    float timeDifference = timeNow - lastAPITime;
-    lastAPITime = timeNow;
-
-    Vector2 currentISSPosition = new Vector2(longitude, latitude);
-    issPositionDelta = currentISSPosition - lastISSPosition;
-    lastISSPosition = currentISSPosition;
-
-    velocity = new Vector3(issPositionDelta[0], issPositionDelta[1], timeDifference);
-  }
-
 }
