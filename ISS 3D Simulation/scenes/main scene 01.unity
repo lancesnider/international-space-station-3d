@@ -632,6 +632,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2bff8c6781b44bf41b50e0a0138060a5, type: 2}
+    - target: {fileID: 2300000, guid: 1cc11ffbe578fa547b800e780e45b9c1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1cc11ffbe578fa547b800e780e45b9c1, type: 3}
   m_IsPrefabParent: 0
@@ -730,8 +734,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 129bba5f06c424499b5d72efb929165b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  earthParent: {fileID: 733316497}
-  earth: {fileID: 1000665062}
+  earthParent: {fileID: 733316496}
+  earth: {fileID: 1589011880}
 --- !u!1 &386900802
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,6 +2637,10 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1538585604}
   m_Mesh: {fileID: 4300008, guid: b01a42179660c4559bc67100738bbf38, type: 3}
+--- !u!1 &1589011880 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100000, guid: 1cc11ffbe578fa547b800e780e45b9c1, type: 3}
+  m_PrefabInternal: {fileID: 1299300886}
 --- !u!1 &1619179592
 GameObject:
   m_ObjectHideFlags: 0
@@ -3693,20 +3701,6 @@ Light:
   m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0

@@ -17,6 +17,7 @@ public class PositionISS : MonoBehaviour {
   void Start ()
   {
     InvokeRepeating("CallISSAPI", 0f, 1.0f);
+    InitialISSPosition();
     InvokeRepeating("SetISSPosition", positionsToRecord, 1.0f);
   }
 
@@ -46,6 +47,10 @@ public class PositionISS : MonoBehaviour {
     float longitude = float.Parse(iss_position.GetString("longitude"));
     float latitude = float.Parse(iss_position.GetString("latitude"));
     return new Vector2(longitude, latitude);
+  }
+
+  void InitialISSPosition () {
+
   }
 
   void SetISSPosition ()
