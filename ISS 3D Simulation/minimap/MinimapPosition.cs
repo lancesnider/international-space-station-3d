@@ -17,6 +17,6 @@ public class MinimapPosition : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
     miniEarthParent.rotation = earthParent.rotation;
-    miniEarth.rotation = earth.rotation;
+    miniEarth.localRotation = earth.localRotation;
 	}
 }

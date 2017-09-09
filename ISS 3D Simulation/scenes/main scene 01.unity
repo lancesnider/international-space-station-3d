@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 44625175}
   - component: {fileID: 44625174}
   m_Layer: 0
-  m_Name: minimap outline
+  m_Name: Minimap outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,8 +199,6 @@ GameObject:
   m_Component:
   - component: {fileID: 158759424}
   - component: {fileID: 158759423}
-  - component: {fileID: 158759422}
-  - component: {fileID: 158759425}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -208,20 +206,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &158759422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 158759421}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbdb8b5937847804386d35441f5250c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  light: {fileID: 2073334639}
-  earthRenderer: {fileID: 1000665060}
-  atmosphereRenderer: {fileID: 1490126131}
 --- !u!20 &158759423
 Camera:
   m_ObjectHideFlags: 0
@@ -271,26 +255,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &158759425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 158759421}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f831bf85f463402d94f7a11efc0dee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  distance: 0.2
-  xSpeed: 5
-  ySpeed: 5
-  yMinLimit: -90
-  yMaxLimit: 90
-  distanceMin: 0.2
-  distanceMax: 0.5
-  smoothTime: 1
 --- !u!1001 &339261911
 Prefab:
   m_ObjectHideFlags: 0
@@ -397,7 +361,7 @@ GameObject:
   - component: {fileID: 475284684}
   - component: {fileID: 475284685}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: Minimap pointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -643,7 +607,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1041503062}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -13265, y: 0, z: 23348}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -803,8 +767,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1522854120}
-  m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 121, y: 0, z: 522}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1041503063}
@@ -887,8 +851,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2073334639}
   - component: {fileID: 2073334640}
+  - component: {fileID: 2073334641}
   m_Layer: 0
-  m_Name: Directional light
+  m_Name: Sun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -901,7 +866,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2073334638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -9020}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -943,3 +908,18 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &2073334641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2073334638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d5e79d2321c7424b99bc26ab3b77048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light: {fileID: 2073334639}
+  earthRenderer: {fileID: 1000665060}
+  atmosphereRenderer: {fileID: 1490126131}
+  miniEarthRenderer: {fileID: 903816704}
