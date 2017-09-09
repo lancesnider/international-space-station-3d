@@ -13,11 +13,4 @@ This will show you the current location of the ISS in 3D space as it flies over 
   - Boomlagoon (for parsing JSON)
   - EarthRendering Free (for the model and maps of the earth)
   
-## To Do
-- Replace the cube with a 3D model of ISS
-- Make ISS info visible to user (speed, altitude, longitude, etc.)
-- Script day/night (right now it's always day and night in the same places)
-- Add sun/moon/galaxy map
-- Smooth animation (I only ping the API 1x/second so the motion is super choppy)
-- Add a minimap of Earth so you can tell where you are (if you're above the ocean, it's currently impossible to tell)
-- Create clickable areas on ISS for more info
+
