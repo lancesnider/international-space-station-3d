@@ -6,6 +6,7 @@ public class PositionISS : MonoBehaviour {
 
   public GameObject earthParent;
   public GameObject earth;
+  public GameObject target;
 
   private GetISSData getDataScript;
   public int positionsToRecord = 3;
@@ -22,8 +23,11 @@ public class PositionISS : MonoBehaviour {
   {
     iTween.ScaleTo(earthParent, iTween.Hash("scale", Vector3.one,"time", 4.0f,"delay", 2.0f,"easeType", "easeInOutSine"));
     iTween.ScaleTo(gameObject, iTween.Hash("scale", Vector3.one, "time", 1.0f, "delay", 5.0f, "easeType", "easeOutSine"));
+
+    iTween.ScaleFrom(target, iTween.Hash("scale", new Vector3(50,50,50), "time", 4.0f, "delay", 2.0f,"easeType", "easeInOutSine"));
     // Subtract the time it took to load the initial data. Otherwise, you get overlapping animations.
     AnimateISS(position[0], position[1], positionsToRecord - Time.time, "easeInOutSine");
+
   }
 
   void SetISSPosition ()
