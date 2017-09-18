@@ -7,6 +7,7 @@ public class PositionISS : MonoBehaviour {
   public GameObject earthParent;
   public GameObject earth;
   public GameObject target;
+  public bool introAnimationEnabled = true;
 
   private GetISSData getDataScript;
   public int positionsToRecord = 3;
@@ -14,15 +15,21 @@ public class PositionISS : MonoBehaviour {
   void Start ()
   {
     getDataScript = GetComponent<GetISSData>();
-    earthParent.transform.localScale = new Vector3(.25f, .25f, .25f);
-    transform.localScale = new Vector3(.001f, .001f, .001f);
+
+    if (introAnimationEnabled == true ) {
+      earthParent.transform.localScale = new Vector3(.25f, .25f, .25f);
+      transform.localScale = new Vector3(.001f, .001f, .001f);
+    }
+
     InvokeRepeating("SetISSPosition", positionsToRecord, 1.0f);
   }
 
   public void AnimateToInitialISSPosition (Vector2 position)
   {
-    iTween.ScaleTo(earthParent, iTween.Hash("scale", Vector3.one,"time", 4.0f,"delay", 2.0f,"easeType", "easeInOutSine"));
-    iTween.ScaleTo(gameObject, iTween.Hash("scale", Vector3.one, "time", 1.0f, "delay", 5.0f, "easeType", "easeOutSine"));
+    if (introAnimationEnabled == true ) {
+      iTween.ScaleTo(earthParent, iTween.Hash("scale", Vector3.one,"time", 4.0f,"delay", 2.0f,"easeType", "easeInOutSine"));
+      iTween.ScaleTo(gameObject, iTween.Hash("scale", Vector3.one, "time", 1.0f, "delay", 5.0f, "easeType", "easeOutSine"));
+    }
 
     iTween.ScaleFrom(target, iTween.Hash("scale", new Vector3(50,50,50), "time", 4.0f, "delay", 2.0f,"easeType", "easeInOutSine"));
     // Subtract the time it took to load the initial data. Otherwise, you get overlapping animations.
