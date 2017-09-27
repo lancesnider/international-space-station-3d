@@ -7,6 +7,8 @@ public class PositionISS : MonoBehaviour {
   public GameObject earthParent;
   public GameObject earth;
   public GameObject target;
+  private Transform thisTransform;
+
   public bool introAnimationEnabled = true;
 
   private GetISSData getDataScript;
@@ -14,14 +16,16 @@ public class PositionISS : MonoBehaviour {
 
   void Start ()
   {
+    thisTransform = transform;
     getDataScript = GetComponent<GetISSData>();
 
     if (introAnimationEnabled == true ) {
       earthParent.transform.localScale = new Vector3(.25f, .25f, .25f);
-      transform.localScale = new Vector3(.001f, .001f, .001f);
+      thisTransform.localScale = new Vector3(.001f, .001f, .001f);
     }
 
     InvokeRepeating("SetISSPosition", positionsToRecord, 1.0f);
+    InvokeRepeating("PointISSForward", 2, 1.0f);
   }
 
   public void AnimateToInitialISSPosition (Vector2 position)
@@ -48,5 +52,11 @@ public class PositionISS : MonoBehaviour {
   {
     iTween.RotateTo(earthParent, iTween.Hash("rotation", new Vector3(0,0,latitude), "time", duration, "easeType", easeType));
     iTween.RotateTo(earth, iTween.Hash("rotation", new Vector3(0, longitude-90, 0), "time", duration, "easeType", easeType, "islocal", true));
+  }
+
+  void PointISSForward () {
+    Vector2 positionDiff = getDataScript.recentISSPositions[positionsToRecord-1] - getDataScript.recentISSPositions[positionsToRecord-2];
+    float angle = Mathf.Atan2(positionDiff.y, positionDiff.x) * Mathf.Rad2Deg;
+    thisTransform.localEulerAngles = new Vector3(angle - 90, 0, 0);
   }
 }
