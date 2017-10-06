@@ -36,11 +36,11 @@ public class DayAndNight : MonoBehaviour
   void RotateSun ()
   {
     DateTime now = DateTime.UtcNow;
-    // GetSeasonRotation(now);
-    float xRotation = GetSeasonRotation(new DateTime(2017,6,21));
+    float xRotation = GetSeasonRotation(now);
+    // float xRotation = GetSeasonRotation(new DateTime(2017,6,21));
 
     float timeDirection = ((float)now.Minute + (float)now.Hour * 60)/1440*360;
-    light.eulerAngles = new Vector3(0, timeDirection+180, 0);
+    light.eulerAngles = new Vector3(xRotation, timeDirection+90, 0);
     UpdateEarthMaterials();
   }
 
