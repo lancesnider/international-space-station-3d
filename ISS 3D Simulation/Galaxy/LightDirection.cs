@@ -5,9 +5,11 @@ using System;
 public class LightDirection : MonoBehaviour {
 
   private Transform sun;
+  public int sunDistance = 100;
 
   public bool useCurrentTime;
 
+  public Transform earthTransform;
   public MeshRenderer earthRenderer;
   private Material earthMaterial;
 
@@ -83,7 +85,11 @@ public class LightDirection : MonoBehaviour {
   }
 
   void RotateSun (Vector3 lightRotation) {
+    Quaternion quaterionSunRotation = Quaternion.Euler(lightRotation);
+    Vector3 negativeDistance = new Vector3(0.0f, 0.0f, -sunDistance);
+
     sun.eulerAngles = lightRotation;
+    sun.position = quaterionSunRotation * negativeDistance;
   }
 
   void UpdateEarthMaterials () {
