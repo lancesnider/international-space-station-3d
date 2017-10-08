@@ -22,7 +22,7 @@ public class LightDirection : MonoBehaviour {
   private float tropicsDegrees = 23.5f;
 
   // This is a 2Pi estimate so I don't have to call Math.pi all the time
-  private float pi2 = 6.28318f;
+  private float pi2 = 6.2831f;
 
   // WARNING: This is an ESTIMATE! But I think it's good enough for v1 of a basic animation.
   //
@@ -78,8 +78,8 @@ public class LightDirection : MonoBehaviour {
     //               |
     //          Winter Solstice
 
-    float percentageOfYear = dayOfYear/365f;
-    float positionOnCosineCurve = Mathf.Cos(percentageOfYear * pi2 + summerSolsticeCosOffset);
+    float dayOfYearNormalized = dayOfYear/365f;
+    float positionOnCosineCurve = Mathf.Cos(dayOfYearNormalized * pi2 + summerSolsticeCosOffset);
 
     return positionOnCosineCurve * tropicsDegrees;
   }
